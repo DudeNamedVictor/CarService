@@ -6,9 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.carservice.appComponent
+import com.example.carservice.data.repositories.Api
 import com.example.carservice.databinding.FragmentHomeBinding
+import javax.inject.Inject
 
 class HomeFragment : Fragment() {
+
+    @Inject
+    lateinit var service: Api
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
@@ -26,6 +32,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        activity?.appComponent?.inject(this)
 
         homeViewModel.text.observe(viewLifecycleOwner, {
             binding.textHome.text = it
